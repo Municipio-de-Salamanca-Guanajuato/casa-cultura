@@ -1,0 +1,22 @@
+.login-container {
+    background: url('/images/Casa-Salamanca.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh; /* Ajusta la altura a toda la pantalla */
+    width: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    width: 30%;
+    height: 40%;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Oculta cualquier desplazamiento */
+    height: 100%;
+    width: 100%;
+}

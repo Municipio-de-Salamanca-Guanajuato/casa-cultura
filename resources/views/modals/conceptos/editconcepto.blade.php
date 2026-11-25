@@ -1,0 +1,34 @@
+<div class="modal fade" id="editConcepto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Concepto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editConceptoForm" action="{{ route('actConcepto') }}" method="POST">
+                    @csrf
+                    <input type="hidden" id="idconcepto_2" name="idconcepto_2" >
+                    <div class="mb-3 row">
+                        {{-- <label for="inputPassword" class="col-sm-10 col-form-label">Título de la noticia:</label> --}}
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="concepto_2" name="concepto_2"
+                                placeholder="Concepto:" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-12">
+                            <input type="number" step="0.01" min="0" class="form-control" id="costo_2"
+                                name="costo_2" placeholder="COSTO:" required>
+                        </div>
+                    </div>
+                    <button type="submit" id="submitEditConcepto" class="btn btn-primary" disabled>Actualizar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
