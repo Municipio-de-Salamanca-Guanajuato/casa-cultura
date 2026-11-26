@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="home">Casa de Cultura</a>
+    <a class="navbar-brand ps-3" href="{{ route('home') }}">Casa de Cultura</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
         <i class="fas fa-bars"></i>
@@ -70,77 +70,89 @@
         @endguest
     </ul>
 </nav>
+@php
+    // Menú lateral: el grupo de la página abierta queda desplegado y la opción en negritas (clase "active")
+    $activo = fn (...$rutas) => request()->routeIs(...$rutas) ? 'active' : '';
+    $grupoOrdenPago = request()->routeIs('adminopago', 'concepto');
+    $grupoAlumnos = request()->routeIs('alumno', 'inscripcion', 'opagoalumno', 'tarjeton', 'historico');
+    $grupoTalleres = request()->routeIs('edificio', 'aula', 'maestro', 'taller');
+    $grupoRentas = request()->routeIs('conceptoxrenta', 'espacio', 'renta');
+@endphp
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Inicio</div>
-                    <a class="nav-link" href="home">
+                    <a class="nav-link {{ $activo('home') }}" href="{{ route('home') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Inicio
                     </a>
                     <div class="sb-sidenav-menu-heading">Complementos</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                        data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                    <a class="nav-link {{ $grupoOrdenPago ? '' : 'collapsed' }}" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts2" aria-expanded="{{ $grupoOrdenPago ? 'true' : 'false' }}"
+                        aria-controls="collapseLayouts2">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         Administación de Orden de Pago
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne"
-                        data-bs-parent="#sidenavAccordion">
+                    <div class="collapse {{ $grupoOrdenPago ? 'show' : '' }}" id="collapseLayouts2"
+                        aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('adminopago') }}">Fundamento Legal</a>
-                            <a class="nav-link" href="{{ route('concepto') }}">Concepto</a>
+                            <a class="nav-link {{ $activo('adminopago') }}" href="{{ route('adminopago') }}">Fundamento Legal</a>
+                            <a class="nav-link {{ $activo('concepto') }}" href="{{ route('concepto') }}">Concepto</a>
                             {{-- <a class="nav-link" href="{{ route('inscripcion') }}">Inscripción</a>
                             <a class="nav-link" href="{{ route('opago') }}">Orden de pago</a> --}}
                         </nav>
                     </div>
 
                     <div class="sb-sidenav-menu-heading">Registro</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                        data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <a class="nav-link {{ $grupoAlumnos ? '' : 'collapsed' }}" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts" aria-expanded="{{ $grupoAlumnos ? 'true' : 'false' }}"
+                        aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         Administación de Alumnos
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                        data-bs-parent="#sidenavAccordion">
+                    <div class="collapse {{ $grupoAlumnos ? 'show' : '' }}" id="collapseLayouts"
+                        aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('alumno') }}">Registrar alumnos</a>
-                            <a class="nav-link" href="{{ route('inscripcion') }}">Inscripción</a>
-                            <a class="nav-link" href="{{ route('opagoalumno') }}">Orden de pago</a>
-                            <a class="nav-link" href="{{ route('tarjeton') }}">Reposición de Tarjetón</a>
-                            <a class="nav-link" href="{{ route('historico') }}">Historico</a>
+                            <a class="nav-link {{ $activo('alumno') }}" href="{{ route('alumno') }}">Registrar alumnos</a>
+                            <a class="nav-link {{ $activo('inscripcion') }}" href="{{ route('inscripcion') }}">Inscripción</a>
+                            <a class="nav-link {{ $activo('opagoalumno') }}" href="{{ route('opagoalumno') }}">Orden de pago</a>
+                            <a class="nav-link {{ $activo('tarjeton') }}" href="{{ route('tarjeton') }}">Reposición de Tarjetón</a>
+                            <a class="nav-link {{ $activo('historico') }}" href="{{ route('historico') }}">Historico</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTalleres" aria-expanded="false" aria-controls="collapseTalleres">
+                    <a class="nav-link {{ $grupoTalleres ? '' : 'collapsed' }}" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTalleres" aria-expanded="{{ $grupoTalleres ? 'true' : 'false' }}"
+                        aria-controls="collapseTalleres">
                         <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
                         Administración de Talleres
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseTalleres" aria-labelledby="headingOne"
-                        data-bs-parent="#sidenavAccordion">
+                    <div class="collapse {{ $grupoTalleres ? 'show' : '' }}" id="collapseTalleres"
+                        aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('edificio') }}">Edificios</a>
-                            <a class="nav-link" href="{{ route('aula') }}">Aulas</a>
-                            <a class="nav-link" href="{{ route('maestro') }}">Maestros</a>
-                            <a class="nav-link" href="{{ route('taller') }}">Talleres</a>
+                            <a class="nav-link {{ $activo('edificio') }}" href="{{ route('edificio') }}">Edificios</a>
+                            <a class="nav-link {{ $activo('aula') }}" href="{{ route('aula') }}">Aulas</a>
+                            <a class="nav-link {{ $activo('maestro') }}" href="{{ route('maestro') }}">Maestros</a>
+                            <a class="nav-link {{ $activo('taller') }}" href="{{ route('taller') }}">Talleres</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                        data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <a class="nav-link {{ $grupoRentas ? '' : 'collapsed' }}" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePages" aria-expanded="{{ $grupoRentas ? 'true' : 'false' }}"
+                        aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                         Administración de Rentas
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                        data-bs-parent="#sidenavAccordion">
+                    <div class="collapse {{ $grupoRentas ? 'show' : '' }}" id="collapsePages"
+                        aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                            <a class="nav-link" href="{{ route('conceptoxrenta') }}">Conceptos por renta</a>
-                            <a class="nav-link" href="{{ route('espacio') }}">Espacios</a>
-                            <a class="nav-link" href="{{ route('renta') }}">Rentas</a>
+                            <a class="nav-link {{ $activo('conceptoxrenta') }}" href="{{ route('conceptoxrenta') }}">Conceptos por renta</a>
+                            <a class="nav-link {{ $activo('espacio') }}" href="{{ route('espacio') }}">Espacios</a>
+                            <a class="nav-link {{ $activo('renta') }}" href="{{ route('renta') }}">Rentas</a>
                             {{-- <a class="nav-link" href="{{ route('opagociudadano') }}">Orden de pago</a> --}}
                             {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#pagesCollapseAuth" aria-expanded="false"

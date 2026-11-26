@@ -25,6 +25,12 @@
 
     {{-- STYLES PERSONALIZADOS --}}
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <style>
+        /* Menú lateral: opción de la página abierta en negritas */
+        .sb-sidenav .nav-link.active {
+            font-weight: 700;
+        }
+    </style>
 
     {{-- FONT AWESOME --}}
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
